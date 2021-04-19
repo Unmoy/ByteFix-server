@@ -77,21 +77,28 @@ client.connect((err) => {
   app.post("/addorder", (req, res) => {
     const orderDetails = req.body;
     ordersCollection.insertOne(orderDetails).then((result) => {
-      console.log(result);
       res.send(result.insertedCount > 0);
     });
   });
 
+  app.post("/showOrderedService", (req, res) => {
+    const email = req.body.email;
+    ordersCollection.find({ email: email }).toArray((err, documents) => {
+      res.send(documents);
+    });
+  });
+
   app.post("/addadmin", (req, res) => {
-    const adminMail = req.body;
-    adminCollection.insertOne(adminMail).then((result) => {
+    const email = req.body;
+    console.log(email);
+    adminCollection.insertOne(email).then((result) => {
+      console.log(result.insertedCount);
       res.send(result.insertedCount > 0);
     });
   });
 
   app.post("/isAdmin", (req, res) => {
     const email = req.body.email;
-    console.log(email);
     adminCollection.find({ adminemail: email }).toArray((err, documents) => {
       res.send(documents.length > 0);
     });
