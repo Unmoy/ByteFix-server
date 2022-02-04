@@ -23,21 +23,35 @@ client.connect((err) => {
   const reviewsCollection = client.db("RepairStore").collection("reviews");
   const ordersCollection = client.db("RepairStore").collection("orders");
   const adminCollection = client.db("RepairStore").collection("admins");
-
+  console.log("working");
   app.post("/addService", (req, res) => {
-    const file = req.files.file;
+    console.log(req.body);
+    const imageUrl = req.body.imageUrl;
     const name = req.body.name;
     const price = req.body.price;
-    const newImg = file.data;
-    const encImg = newImg.toString("base64");
-    var image = {
-      contentType: file.mimetype,
-      size: file.size,
-      img: Buffer.from(encImg, "base64"),
-    };
-    servicesCollection.insertOne({ name, price, image }).then((result) => {
-      res.send(result.insertedCount > 0);
-    });
+    const description = req.body.description;
+    const subHeading1 = req.body.subHeading1;
+    const subDescription1 = req.body.subDescription1;
+    const subHeading2 = req.body.subHeading2;
+    const subDescription2 = req.body.subDescription2;
+    const subHeading3 = req.body.subHeading3;
+    const subDescription3 = req.body.subDescription3;
+    servicesCollection
+      .insertOne({
+        name,
+        price,
+        imageUrl,
+        description,
+        subHeading1,
+        subDescription1,
+        subHeading2,
+        subDescription2,
+        subHeading3,
+        subDescription3,
+      })
+      .then((result) => {
+        res.send(result.insertedCount > 0);
+      });
   });
 
   app.get("/showservice", (req, res) => {
@@ -54,19 +68,15 @@ client.connect((err) => {
   });
 
   app.post("/addReviews", (req, res) => {
-    const file = req.files.file;
+    const reviewimageUrl = req.body.imageUrl;
     const name = req.body.name;
     const comment = req.body.comment;
-    const newImg = file.data;
-    const encImg = newImg.toString("base64");
-    var image = {
-      contentType: file.mimetype,
-      size: file.size,
-      img: Buffer.from(encImg, "base64"),
-    };
-    reviewsCollection.insertOne({ name, comment, image }).then((result) => {
-      res.send(result.insertedCount > 0);
-    });
+    console.log("74", req.body);
+    reviewsCollection
+      .insertOne({ name, comment, reviewimageUrl })
+      .then((result) => {
+        res.send(result.insertedCount > 0);
+      });
   });
 
   app.get("/showreviews", (req, res) => {
@@ -83,7 +93,8 @@ client.connect((err) => {
 
   app.post("/showOrderedService", (req, res) => {
     const email = req.body.email;
-    ordersCollection.find({ email: email }).toArray((err, documents) => {
+    console.log(email);
+    ordersCollection.find({ user_email: email }).toArray((err, documents) => {
       res.send(documents);
     });
   });
