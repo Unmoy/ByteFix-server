@@ -4,14 +4,11 @@ const cors = require("cors");
 const ObjectId = require("mongodb").ObjectID;
 const MongoClient = require("mongodb").MongoClient;
 const port = process.env.PORT || 5000;
-const fileUpload = require("express-fileupload");
-require("dotenv").config();
 
+require("dotenv").config();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use(fileUpload());
-app.use(express.static("consumerImage"));
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.nexck.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
