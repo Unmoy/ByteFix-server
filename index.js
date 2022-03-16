@@ -87,7 +87,20 @@ client.connect((err) => {
       res.send(result.insertedCount > 0);
     });
   });
-
+  app.patch("/updateStatus/:id", (req, res) => {
+    console.log("91", req.body.value);
+    ordersCollection
+      .updateOne(
+        { _id: ObjectId(req.params.id) },
+        {
+          $set: { process: req.body.value },
+        }
+      )
+      .then((result) => {
+        // console.log("100", result.modifiedCount > 0);
+        res.send(result.modifiedCount > 0);
+      });
+  });
   app.post("/showOrderedService", (req, res) => {
     const email = req.body.email;
     console.log(email);
