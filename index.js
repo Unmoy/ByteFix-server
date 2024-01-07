@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const ObjectId = require("mongodb").ObjectID;
 const MongoClient = require("mongodb").MongoClient;
+
 const port = process.env.PORT || 5000;
 
 require("dotenv").config();
@@ -20,7 +21,7 @@ client.connect((err) => {
   const reviewsCollection = client.db("RepairStore").collection("reviews");
   const ordersCollection = client.db("RepairStore").collection("orders");
   const adminCollection = client.db("RepairStore").collection("admins");
-  console.log("working");
+  console.log("running");
   app.post("/addService", (req, res) => {
     console.log(req.body);
     const imageUrl = req.body.imageUrl;
