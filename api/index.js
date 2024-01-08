@@ -21,7 +21,10 @@ client.connect((err) => {
   const reviewsCollection = client.db("RepairStore").collection("reviews");
   const ordersCollection = client.db("RepairStore").collection("orders");
   const adminCollection = client.db("RepairStore").collection("admins");
-  console.log("running");
+  console.log("Local ByteFix Server is Running");
+  app.post("/", () => {
+    console.log("ByteFix Server is Running");
+  });
   app.post("/addService", (req, res) => {
     console.log(req.body);
     const imageUrl = req.body.imageUrl;
