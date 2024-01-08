@@ -22,9 +22,9 @@ client.connect((err) => {
   const ordersCollection = client.db("RepairStore").collection("orders");
   const adminCollection = client.db("RepairStore").collection("admins");
   console.log("Local ByteFix Server is Running");
-  app.post("/", () => {
-    console.log("ByteFix Server is Running");
-  });
+  // app.post("/", () => {
+  //   console.log("ByteFix Server is Running");
+  // });
   app.post("/addService", (req, res) => {
     console.log(req.body);
     const imageUrl = req.body.imageUrl;
@@ -144,4 +144,6 @@ client.connect((err) => {
   });
 });
 
-app.listen(port);
+app.listen(port, () => {
+  console.log("Server is listening");
+});
