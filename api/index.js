@@ -21,10 +21,9 @@ client.connect((err) => {
   const reviewsCollection = client.db("RepairStore").collection("reviews");
   const ordersCollection = client.db("RepairStore").collection("orders");
   const adminCollection = client.db("RepairStore").collection("admins");
-  console.log("Local ByteFix Server is Running");
+  // console.log("Local ByteFix Server is Running");
   app.get("/", (req, res) => {
     res.status(200).json({ message: "ByteFix Server is Running" });
-    // console.log("ByteFix Server is Running");
   });
   app.post("/addService", (req, res) => {
     console.log(req.body);
@@ -145,6 +144,4 @@ client.connect((err) => {
   });
 });
 
-app.listen(port, () => {
-  console.log("Server is listening");
-});
+app.listen(port);
