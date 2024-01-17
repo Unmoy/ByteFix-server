@@ -57,7 +57,7 @@ client.connect((err) => {
 
   app.get("/showservice", (req, res) => {
     servicesCollection.find({}).toArray((err, documents) => {
-      res.status(200).json(res.send(documents));
+      res.send(documents);
     });
   });
   app.get("/getservice/:id", (req, res) => {
