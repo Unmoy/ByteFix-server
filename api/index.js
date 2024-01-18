@@ -21,12 +21,11 @@ client.connect((err) => {
   const reviewsCollection = client.db("RepairStore").collection("reviews");
   const ordersCollection = client.db("RepairStore").collection("orders");
   const adminCollection = client.db("RepairStore").collection("admins");
-  // console.log("Local ByteFix Server is Running");
+
   app.get("/", (req, res) => {
     res.status(200).json({ message: "ByteFix Server is Running" });
   });
   app.post("/addService", (req, res) => {
-    console.log(req.body);
     const imageUrl = req.body.imageUrl;
     const name = req.body.name;
     const price = req.body.price;
@@ -55,11 +54,25 @@ client.connect((err) => {
       });
   });
 
-  app.get("/showservice", (req, res) => {
-    servicesCollection.find({}).toArray((err, documents) => {
-      res.send(documents);
+  // app.get("/showservice", (req, res) => {
+  //   servicesCollection.find({})((err, documents) => {
+  //     console.log(documents);
+  //     res.send(results);
+  //   });
+  // });
+
+  app.get("/showallservice", function (req, res) {
+    servicesCollection.find().toArray(function (err, items) {
+      if (Array.isArray(items)) {
+        console.log("It is an array!");
+        res.send(items);
+      } else {
+        console.log("It is not an array!");
+      }
+      if (err) console.log(err);
     });
   });
+
   app.get("/getservice/:id", (req, res) => {
     servicesCollection
       .find({ _id: ObjectId(req.params.id) })
